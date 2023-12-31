@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from rest_framework.views import APIView  
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
-from django.http import JsonResponse  
+from django.http import JsonResponse
 
-from .serializers import TestUserSerializer
-from .models import TestUserModel
+from .serializers import TestUserSerializer, PostSerializer  # Import PostSerializer
+from .models import TestUserModel, Post  # Import Post model
+
 
 # Create your views here.
 class HomeView(APIView):  
@@ -27,5 +28,13 @@ class TestUserView(RetrieveAPIView):
          "message":"",
          "content": data.data
       })
+   
+class PostListAPIView(ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostDetailAPIView(RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
 
